@@ -5,7 +5,8 @@ Transformer: LSSviewTransformer
 
 
 ## Overview
-
+The InternImage backbone with dcnv3 has cpu build capabilities 
+also bevpool and lssview transformer has cpu build capabilities 
 This readme provides instructions for setting up and using the CPU version of the SFusion model with DCNV3, LSSViewTransformer, and DepthNet on the NuScenes dataset. SFusion is a sensor fusion model designed to work with radar and camera data for 3D object detection and depth estimation.
 
 ## Table of Contents
