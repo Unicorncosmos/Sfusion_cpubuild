@@ -173,7 +173,75 @@ def main():
                         print("MLP_INPUT:", mlp_input)
                         print("BACKBONE_OUT[0]:", backbone_out[0].shape)
                         print("BACKBONE_OUT[1]:", backbone_out[1].shape)
-                        break
+                        cfg.model.train_cfg = None
+                        # sess1_path =  'hvdet_stage1.onnx'
+                        # sess1_1_path = 'hvdet_stage1_1.onnx'
+                        # sess2_path = 'hvdet_stage2.onnx'
+                        # sess3_path = 'hvdet_stage3.onnx'
+                        # session1 = onnxruntime.InferenceSession(sess1_path, providers=['CPUExecutionProvider'])
+                        # session1_1 = onnxruntime.InferenceSession(sess1_1_path, providers=['CPUExecutionProvider'])
+                        # session2 = onnxruntime.InferenceSession(sess2_path, providers=['CPUExecutionProvider'])
+                        # session3 = onnxruntime.InferenceSession(sess3_path, providers=['CPUExecutionProvider'])
+                            
+                        # sess1_out_img_feat, sess1_out_depth, sess1_out_tran_feat = session1.run(['img_feat', 'depth', 'tran_feat'], 
+                        #                                                                 {
+                        #                                                                     'backbone_out0':backbone_out[2].cpu().numpy(),
+                        #                                                                     'backbone_out1':backbone_out[3].cpu().numpy(),
+                        #                                                                     'mlp_input':mlp_input.cpu().numpy(),
+                        #                                                             #     # dynamic_axes={'backbone_in':[0], 'backbone_out':[0]})
+                        #                                                                 })
+
+
+                        # sess1_out_img_feat = torch.tensor(sess1_out_img_feat).to(rot.device)
+                        # sess1_out_depth = torch.tensor(sess1_out_depth).to(rot.device)
+                        # sess1_out_tran_feat = torch.tensor(sess1_out_tran_feat).to(rot.device)
+                        # inputs = [sess1_out_img_feat, rot, tran, intrin, post_rot, post_tran, bda, mlp_input]
+                        # bev_feat, _ = view_transformer.view_transform(inputs, sess1_out_depth, sess1_out_tran_feat)
+                
+                        # sess1_1_bev_feat = session1_1.run(['out_bev_feat'],
+                        #                                 {'bev_feat': bev_feat.cpu().numpy()})
+                        # bev_feat_list.append(sess1_1_bev_feat[0])
+
+        
+                        # multi_bev_feat = np.concatenate(bev_feat_list, axis=1)
+
+                        # output_names=['bev_feat'] + [f'output_{j}' for j in range(36)]
+                        # sess2_out = session2.run(output_names, 
+                        #                     {
+                        #                     'multi_bev_feat':multi_bev_feat,
+                        #                     }) 
+                        # for i in range(len(sess2_out)):
+                        #     sess2_out[i] = torch.tensor(sess2_out[i]).cuda()
+                        # bev_feat = sess2_out[0]
+                        # pts_outs = sess2_out[1:]
+
+
+                        # pts_out_dict = model.pts_head_result_deserialize(pts_outs)
+                        # radar_pc = data['radar_feat'][0]
+        
+                        # radar_feat = get_valid_radar_feat(pts_out_dict, radar_pc, cfg.radar_cfg)
+                        # sec_feats = torch.cat([bev_feat, radar_feat], 1) 
+
+                        # output_names=[f'radar_out_{j}' for j in range(15)]
+
+                        # sess3_radar_out=session3.run(output_names, 
+                        #                     {
+                        #                     'sec_feat':sec_feats.cpu().numpy(),
+                        #                     }) 
+                        # for i in range(len(sess3_radar_out)):
+                        #     sess3_radar_out[i] = torch.tensor(sess3_radar_out[i]).to(pts_outs[0].device)
+                        # pts_outs = model.pts_head_result_deserialize(pts_outs)
+                        # sec_outs=model.radar_head_result_deserialize(sess3_radar_out)
+    
+                        # for task_ind, task_out in enumerate(sec_outs):
+                        #     ori_task_out = pts_outs[task_ind][0]
+                        #     sec_task_out = task_out[0]
+                        #     for k, v in ori_task_out.items():
+                        #         sec_k = 'sec_' + k
+                        #         if sec_k in sec_task_out.keys() and k != 'heatmap':
+                        #             pts_outs[task_ind][0][k] = sec_task_out[sec_k]
+                        # out_bbox_list = [dict() for _ in range(len(imgs_meta))]
+
 
 if __name__ == '__main__':
     main()
