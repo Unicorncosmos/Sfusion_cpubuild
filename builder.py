@@ -1,7 +1,48 @@
 from CPU_SFUSION_BUILD.InternImage.internimage import InternImage
 from CPU_SFUSION_BUILD.LSSViewtransformer.cpulss import LSSViewTransformerBEVDepth
-
+from Radar_processing_pipelines import get_valid_radar_feat
+from Radar_processing_pipelines import
 import sys
+import onnxruntime
+
+# this function is taken from the mmdet3d library mmdet3d/models/detectors/bevdet.py
+# this function is used to deserialize and serialized the output of the radar head
+
+def radar_head_result_serialize(self, outs):
+    outs_ = []
+    for out in outs:
+        for key in ['sec_reg', 'sec_rot', 'sec_vel']:
+            outs_.append(out[0][key])
+    return outs_
+
+def radar_head_result_deserialize(self, outs):
+    outs_ = []
+    keys = ['sec_reg', 'sec_rot', 'sec_vel']
+    for head_id in range(len(outs) // 3):
+        outs_head = [dict()]
+        for kid, key in enumerate(keys):
+            outs_head[0][key] = outs[head_id * 3 + kid]
+        outs_.append(outs_head)
+    return outs_
+
+def pts_head_result_serialize(self, outs):
+    outs_ = []
+    for out in outs:
+        for key in ['reg', 'height', 'dim', 'rot', 'vel', 'heatmap']:
+            outs_.append(out[0][key])
+    return outs_
+
+def pts_head_result_deserialize(self, outs):
+    outs_ = []
+    keys = ['reg', 'height', 'dim', 'rot', 'vel', 'heatmap']
+    for head_id in range(len(outs) // 6):
+        outs_head = [dict()]
+        for kid, key in enumerate(keys):
+            outs_head[0][key] = outs[head_id * 6 + kid]
+        outs_.append(outs_head)
+    return outs_
+
+
 data_config = {
     'cams': [
         'CAM_FRONT_LEFT', 'CAM_FRONT', 'CAM_FRONT_RIGHT', 'CAM_BACK_LEFT',
@@ -86,6 +127,7 @@ intern_image_model = InternImage(
 
 if pretrained:
   intern_image_model.init_weights()
+
 
 
 #-----------------------Transformer_build--------------------------------
