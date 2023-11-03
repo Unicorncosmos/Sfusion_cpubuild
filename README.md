@@ -39,7 +39,7 @@ Either
 Install the Nuscenes Dataset
 ```
 
-Use the [mmdet3d](https://github.com/HVXLab/HVDetFusion/tree/main/mmdet3d) folder in HVDetFusion repo for dataloader and dataprocessing pipeline
+Use the [mmdet3d](https://github.com/HVXLab/HVDetFusion/tree/main/mmdet3d) folder and config from the hvdetfusion repositry 
 
 
 ```
