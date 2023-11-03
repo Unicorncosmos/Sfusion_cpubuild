@@ -316,7 +316,7 @@ def main():
                         batch_size = len(out_bbox_list)
                         for _ in range(batch_size):
                                 prog_bar.update()
-                        mmcv.dump(results, args.out)                        
+                        mmcv.dump(results)                        
 
 if __name__ == '__main__':
     main()
