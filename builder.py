@@ -1,12 +1,35 @@
 from CPU_SFUSION_BUILD.InternImage.internimage import InternImage
 from CPU_SFUSION_BUILD.LSSViewtransformer.cpulss import LSSViewTransformerBEVDepth
 from Radar_processing_pipelines import get_valid_radar_feat
-from Radar_processing_pipelines import
 import sys
 import onnxruntime
-
+point_cloud_range = [-51.2, -51.2, -5.0, 51.2, 51.2, 3.0]
+tasks=[
+            dict(num_class=1, class_names=['car']),
+            dict(num_class=2, class_names=['truck', 'construction_vehicle']),
+            dict(num_class=2, class_names=['bus', 'trailer']),
+            dict(num_class=1, class_names=['barrier']),
+            dict(num_class=2, class_names=['motorcycle', 'bicycle']),
+            dict(num_class=2, class_names=['pedestrian', 'traffic_cone']),
+        ]
+common_heads=dict(
+            reg=(2, 2), height=(1, 2), dim=(3, 2), rot=(2, 2), vel=(2, 2))
 # this function is taken from the mmdet3d library mmdet3d/models/detectors/bevdet.py
 # this function is used to deserialize and serialized the output of the radar head
+from bboxcoder import CenterPointBBoxCoder
+from Centerheads import CenterPointBBoxCoder
+pc_range=point_cloud_range[:2]
+post_center_range=[-61.2, -61.2, -10.0, 61.2, 61.2, 10.0],
+max_num=500
+score_threshold=0.1
+voxel_size = [0.1, 0.1, 0.2]
+out_size_factor=4,
+voxel_size=voxel_size[:2],
+code_size=9
+bbox_coder = CenterPointBBoxCoder(pc_range,out_size_factor,voxel_size,max_num,code_size)
+norm_bbox=True
+
+center_heads = CenterPointBBoxCoder(tasks,bbox_coder,common_heads,norm_bbox)
 
 def radar_head_result_serialize(self, outs):
     outs_ = []
