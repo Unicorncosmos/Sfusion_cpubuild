@@ -26,3 +26,19 @@ onnxruntime=1.16.0=pypi_0
 pytorch=1.9.0=py3.9_cpu_0
 ```
 
+## To run this model on CPU
+
+To run this model on CPU, you will need
+Either 
+
+1. A machine with a CPU that supports AVX2 instructions
+2. A machine with a CPU that has minimum 16GB RAM.
+
+```
+pip install -r requiremets.txt
+```
+or
+```
+docker build -t sfusion_cpu .
+```
+
