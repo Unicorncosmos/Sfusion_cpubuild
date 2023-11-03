@@ -4,6 +4,7 @@ segmentation_model: Internimage
 Ops: DCNv3
 Transformer: LSSviewTransformer
 
+This repository will generate result.pkl fusion data
 
 ## Overview
 The InternImage backbone with dcnv3 has cpu build capabilities 
