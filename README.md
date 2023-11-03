@@ -1,16 +1,21 @@
 # SFusion CPU Version Readme
+
 segmentation_model: Internimage
 Ops: DCNv3
 Transformer: LSSviewTransformer
 
 ## step:1 : 
-[] Install the Nuscenes Dataset
+Install the Nuscenes Dataset
+
 ## step 2 : 
-[] Install Requirement text
+Install Requirement text
+
 ## step 3 :
-[] use the mmdet3d HVDetFusion repo fir dataloader and dataprocessing pipeline
+Use the mmdet3d HVDetFusion repo for dataloader and dataprocessing pipeline
+
 ## step 4 :
-[] Install the onnx model
+Install the onnx model
+
 ## step 5 :
 Alter the every path to the dataset
 
