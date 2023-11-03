@@ -36,11 +36,11 @@ Either
 2. A machine with a CPU that has minimum 16GB RAM.
 ```
 Install the Nuscenes Dataset
+```
 
-```
-```
 Use the [mmdet3d](https://github.com/HVXLab/HVDetFusion/tree/main/mmdet3d) HVDetFusion repo for dataloader and dataprocessing pipeline
-```
+
+
 ```
 Install the onnx model
 ```
