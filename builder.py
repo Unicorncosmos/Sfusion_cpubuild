@@ -1,6 +1,7 @@
 from CPU_SFUSION_BUILD.InternImage.internimage import InternImage
 from CPU_SFUSION_BUILD.LSSViewtransformer.cpulss import LSSViewTransformerBEVDepth
 from Radar_processing_pipelines import get_valid_radar_feat
+from mmdet3d.core import bbox3d2result
 import sys
 import onnxruntime
 point_cloud_range = [-51.2, -51.2, -5.0, 51.2, 51.2, 3.0]
@@ -29,7 +30,7 @@ code_size=9
 bbox_coder = CenterPointBBoxCoder(pc_range,out_size_factor,voxel_size,max_num,code_size)
 norm_bbox=True
 
-center_heads = CenterPointBBoxCoder(tasks,bbox_coder,common_heads,norm_bbox)
+heads = CenterPointBBoxCoder(tasks,bbox_coder,common_heads,norm_bbox)
 
 def radar_head_result_serialize(self, outs):
     outs_ = []
@@ -302,7 +303,20 @@ def main():
                                 if sec_k in sec_task_out.keys() and k != 'heatmap':
                                     pts_outs[task_ind][0][k] = sec_task_out[sec_k]
                         out_bbox_list = [dict() for _ in range(len(imgs_meta))]
-                        
+                        bbox_list = heads.get_bboxes(
+                                pts_outs, imgs_meta, rescale=False)
+                        bbox_pts = [
+                                bbox3d2result(bboxes, scores, labels)
+                                for bboxes, scores, labels in bbox_list
+                            ]
+
+                        for result_dict, pts_bbox in zip(out_bbox_list, bbox_pts):
+                                    result_dict['pts_bbox'] = pts_bbox
+                        results.extend(out_bbox_list)
+                        batch_size = len(out_bbox_list)
+                        for _ in range(batch_size):
+                                prog_bar.update()
+                        mmcv.dump(results, args.out)                        
 
 if __name__ == '__main__':
     main()
