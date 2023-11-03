@@ -4,20 +4,6 @@ segmentation_model: Internimage
 Ops: DCNv3
 Transformer: LSSviewTransformer
 
-```shell
-
-
-
-Install Requirement text
-
-
-
-
-
-Alter the every path to the dataset
-
-
-```
 
 ## Overview
 The InternImage backbone with dcnv3 has cpu build capabilities 
@@ -54,15 +40,9 @@ Install the Nuscenes Dataset
 ```
 ```
 Use the [mmdet3d](https://github.com/HVXLab/HVDetFusion/tree/main/mmdet3d) HVDetFusion repo for dataloader and dataprocessing pipeline
-
-
-
+```
 ```
 Install the onnx model
-```
-
-```
-
 ```
 ```
 pip install -r requiremets.txt
